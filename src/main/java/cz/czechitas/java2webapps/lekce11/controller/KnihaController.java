@@ -9,11 +9,13 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Filip Jirsák
@@ -38,9 +40,20 @@ public class KnihaController {
     return service.seznamVcetneStornovanych(pageable);
   }
 
+  @GetMapping("/{id}")
+  public Optional<Kniha> detail(@PathVariable long id) {
+    return service.detail(id);
+  }
+
   @PostMapping("")
   public Kniha pridat(@RequestBody Kniha kniha) {
     return service.pridat(kniha);
+  }
+
+  @PutMapping("/{id}")
+  public Kniha upravit(@PathVariable long id, @RequestBody Kniha kniha) {
+    kniha.setId(id);
+    return service.upravit(kniha);
   }
 
   @DeleteMapping("/{id}")
